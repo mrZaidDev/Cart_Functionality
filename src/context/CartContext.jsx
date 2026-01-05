@@ -3,23 +3,25 @@ import { createContext, useEffect, useState } from "react";
 export const CartDataContext = createContext();
 const CartContext = ({ children }) => {
   const [cartData, setCartData] = useState([]);
+  const [total, setTotal] = useState(2300);
+
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
       setCartData(JSON.parse(savedCart));
     } else {
-      console.log("No cart data found");
     }
   }, []);
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartData));
-    console.log("cart data saved");
   }, [cartData]);
 
   return (
     <div>
-      <CartDataContext.Provider value={[cartData, setCartData]}>
+      <CartDataContext.Provider
+        value={[cartData, setCartData, total, setTotal]}
+      >
         {children}
       </CartDataContext.Provider>
     </div>
